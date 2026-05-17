@@ -1,21 +1,26 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
+import EventCard from '../../components/EventCard';
+import { mockEvents } from '../../mocks/events.mock';
+import { Event } from '../../types/event.type';
 
 export default function EventsScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Events</Text>
-    </View>
+    <FlatList
+      data={mockEvents}
+      keyExtractor={(item: Event) => item.id}
+      renderItem={({ item }) => <EventCard event={item} />}
+      contentContainerStyle={styles.list}
+      ItemSeparatorComponent={() => <View style={styles.separator} />}
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+  list: {
+    paddingHorizontal: 16,
+    paddingVertical: 16,
   },
-  text: {
-    fontSize: 24,
-    fontWeight: '600',
+  separator: {
+    height: 12,
   },
 });
