@@ -1,13 +1,15 @@
 import { View, TouchableOpacity, Text, StyleSheet, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import { Tabs } from 'expo-router';
+
+type TabBarProps = Parameters<NonNullable<React.ComponentProps<typeof Tabs>['tabBar']>>[0];
 
 const ACTIVE_COLOR = '#000';
 const INACTIVE_COLOR = '#8E8E93';
 const CENTER_COLOR = '#000';
 
-export default function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
+export default function CustomTabBar({ state, descriptors, navigation }: TabBarProps) {
   const insets = useSafeAreaInsets();
 
   const renderTab = (index: number) => {
@@ -32,7 +34,7 @@ export default function CustomTabBar({ state, descriptors, navigation }: BottomT
   };
 
   return (
-    <View style={[styles.container, { paddingBottom: insets.bottom }]}>
+    <View style={[styles.container, { paddingBottom: Math.max(insets.bottom, 10) }]}>
       {renderTab(0)}
 
       <View style={styles.centerSlot}>
@@ -49,11 +51,11 @@ export default function CustomTabBar({ state, descriptors, navigation }: BottomT
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     backgroundColor: '#fff',
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: '#E5E5EA',
-    height: 60,
+    paddingTop: 10,
     ...Platform.select({
       ios: {
         shadowColor: '#000',
@@ -67,7 +69,6 @@ const styles = StyleSheet.create({
   tab: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
     gap: 2,
   },
   label: {
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     backgroundColor: CENTER_COLOR,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 24,
+    marginTop: -40,
     ...Platform.select({
       ios: {
         shadowColor: '#000',
