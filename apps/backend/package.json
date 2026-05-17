@@ -1,0 +1,9 @@
+{
+  "name": "backend",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/download-pocketbase.mjs",
+    "dev": "node scripts/download-pocketbase.mjs && ./pocketbase serve --dev",
+    "start": "./pocketbase serve --http=0.0.0.0:8090"
+  }
+}
